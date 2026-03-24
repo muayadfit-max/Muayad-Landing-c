@@ -728,6 +728,75 @@
       opacity: 1;
     }
 
+    /* ── DURATION BADGE ── */
+    .duration-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(26,157,241,0.1);
+      border: 1px solid rgba(26,157,241,0.25);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 4px 12px;
+      border-radius: 50px;
+      margin-bottom: 14px;
+    }
+    .duration-badge.gold-dur {
+      background: rgba(245,200,66,0.1);
+      border-color: rgba(245,200,66,0.3);
+      color: var(--gold);
+    }
+
+    /* ── PAYMENT OPTIONS TOGGLE ── */
+    .payment-toggle {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+      background: rgba(255,255,255,0.04);
+      border-radius: 50px;
+      padding: 4px;
+      border: 1px solid rgba(255,255,255,0.07);
+    }
+    .pay-opt {
+      flex: 1;
+      padding: 8px 10px;
+      border-radius: 50px;
+      font-family: var(--font);
+      font-size: 0.8rem;
+      font-weight: 700;
+      text-align: center;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: rgba(240,246,255,0.45);
+      transition: background 0.25s, color 0.25s;
+    }
+    .pay-opt.active {
+      background: var(--blue);
+      color: #fff;
+    }
+    .pay-opt.active.gold-active {
+      background: var(--gold);
+      color: #0a0800;
+    }
+
+    /* ── PRICE PANELS ── */
+    .price-panel { display: none; }
+    .price-panel.active { display: block; }
+
+    .installment-note {
+      font-size: 0.78rem;
+      color: rgba(240,246,255,0.4);
+      margin-top: 5px;
+      line-height: 1.5;
+    }
+    .installment-note strong {
+      color: var(--blue);
+      opacity: 1;
+    }
+    .installment-note.gold-note strong { color: var(--gold); }
+
     /* Divider line */
     .card-divider {
       height: 1px;
@@ -1405,18 +1474,28 @@
   <div class="container">
     <div class="section-label">💳 الباقات</div>
     <h2 class="section-title">اختار باقتك 👇</h2>
-    <p class="section-sub">كل الباقات مخصصة 100% — ما في خطط جاهزة</p>
+    <p class="section-sub">كل الباقات لمدة شهر كامل — ادفع مرة واحدة أو اختار الأقساط</p>
 
     <div class="pricing-grid">
 
       <!-- BASIC -->
       <div class="pricing-card reveal reveal-delay-1">
+        <div class="duration-badge">📅 شهر كامل — 30 يوم</div>
         <h3 class="card-title">📋 جداول تغذية + تمرين</h3>
         <p class="card-desc">خطط مصممة على حسب هدفك ونمط حياتك — بدون متابعة</p>
         <div class="price-wrap">
-          <div class="price-omr" style="color:var(--blue);">14.99 <span class="omr-currency">OMR</span> <span class="omr-period">/ أسبوع</span></div>
-          <div class="price-usd-secondary">$39.90 / week</div>
-          <div class="price-onetime">أو مرة واحدة — <span class="omr-once">29.99 OMR</span> <span style="opacity:0.4;font-size:0.8rem;">($79)</span></div>
+          <div class="payment-toggle">
+            <button class="pay-opt active" onclick="switchPay(this,'basic','full')">دفعة واحدة</button>
+            <button class="pay-opt" onclick="switchPay(this,'basic','inst')">أقساط</button>
+          </div>
+          <div id="basic-full" class="price-panel active">
+            <div class="price-omr" style="color:var(--blue);">29.99 <span class="omr-currency">OMR</span> <span class="omr-period">/ شهر</span></div>
+            <div class="price-usd-secondary">~$79 / month</div>
+          </div>
+          <div id="basic-inst" class="price-panel">
+            <div class="price-omr" style="color:var(--blue);">14.99 <span class="omr-currency">OMR</span> <span class="omr-period">× 2</span></div>
+            <div class="installment-note">قسطين — الأول عند البداية، الثاني بعد <strong>15 يوم</strong></div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <ul class="features-list">
@@ -1432,12 +1511,22 @@
       <!-- SILVER -->
       <div class="pricing-card tier-silver reveal reveal-delay-2">
         <div class="card-tier-badge badge-blue">الأكثر طلباً ⭐</div>
+        <div class="duration-badge">📅 شهر كامل — 30 يوم</div>
         <h3 class="card-title">🥈 الباقة الفضية</h3>
         <p class="card-desc">تدريب احترافي بمتابعة حقيقية داخل تطبيقي</p>
         <div class="price-wrap">
-          <div class="price-omr" style="color:var(--blue);">24.99 <span class="omr-currency">OMR</span> <span class="omr-period">/ كل 14 يوم</span></div>
-          <div class="price-usd-secondary">$69 / 14 days</div>
-          <div class="price-onetime">أو مرة واحدة — <span class="omr-once">49.99 OMR</span> <span style="opacity:0.4;font-size:0.8rem;">($139)</span></div>
+          <div class="payment-toggle">
+            <button class="pay-opt active" onclick="switchPay(this,'silver','full')">دفعة واحدة</button>
+            <button class="pay-opt" onclick="switchPay(this,'silver','inst')">أقساط</button>
+          </div>
+          <div id="silver-full" class="price-panel active">
+            <div class="price-omr" style="color:var(--blue);">49.99 <span class="omr-currency">OMR</span> <span class="omr-period">/ شهر</span></div>
+            <div class="price-usd-secondary">~$139 / month</div>
+          </div>
+          <div id="silver-inst" class="price-panel">
+            <div class="price-omr" style="color:var(--blue);">24.99 <span class="omr-currency">OMR</span> <span class="omr-period">× 2</span></div>
+            <div class="installment-note">قسطين — الأول عند البداية، الثاني بعد <strong>15 يوم</strong></div>
+          </div>
         </div>
         <div class="card-divider"></div>
         <ul class="features-list">
@@ -1456,12 +1545,22 @@
       <!-- GOLD -->
       <div class="pricing-card tier-gold reveal reveal-delay-3">
         <div class="card-tier-badge badge-gold-style">🔥 5 أماكن فقط</div>
+        <div class="duration-badge gold-dur">📅 شهر كامل — 30 يوم</div>
         <h3 class="card-title" style="color:var(--white);">🥇 الباقة الذهبية</h3>
         <p class="card-desc" style="color:rgba(240,246,255,0.45);">أعلى مستوى متابعة — محدود جداً</p>
         <div class="price-wrap">
-          <div class="price-omr" style="color:var(--gold);">37.99 <span class="omr-currency" style="color:var(--gold);">OMR</span> <span class="omr-period" style="color:rgba(240,246,255,0.4);">/ كل 14 يوم</span></div>
-          <div class="price-usd-secondary">$99.99 / 14 days</div>
-          <div class="price-onetime" style="color:rgba(240,246,255,0.55);">أو مرة واحدة — <span class="omr-once" style="color:var(--gold);">74.99 OMR</span> <span style="opacity:0.4;font-size:0.8rem;">($199)</span></div>
+          <div class="payment-toggle">
+            <button class="pay-opt active gold-active" onclick="switchPay(this,'gold','full')">دفعة واحدة</button>
+            <button class="pay-opt" onclick="switchPay(this,'gold','inst')">أقساط</button>
+          </div>
+          <div id="gold-full" class="price-panel active">
+            <div class="price-omr" style="color:var(--gold);">74.99 <span class="omr-currency" style="color:var(--gold);">OMR</span> <span class="omr-period" style="color:rgba(240,246,255,0.4);">/ شهر</span></div>
+            <div class="price-usd-secondary">~$199 / month</div>
+          </div>
+          <div id="gold-inst" class="price-panel">
+            <div class="price-omr" style="color:var(--gold);">37.99 <span class="omr-currency" style="color:var(--gold);">OMR</span> <span class="omr-period" style="color:rgba(240,246,255,0.4);">× 2</span></div>
+            <div class="installment-note gold-note">قسطين — الأول عند البداية، الثاني بعد <strong>15 يوم</strong></div>
+          </div>
         </div>
         <div class="card-divider" style="background:rgba(245,200,66,0.1);"></div>
         <ul class="features-list">
@@ -1506,10 +1605,10 @@
         </tbody>
         <tfoot>
           <tr>
-            <td>السعر</td>
-            <td>29.99 OMR / 14.99 أسبوع</td>
-            <td>49.99 OMR / 24.99 كل 14 يوم</td>
-            <td>74.99 OMR / 37.99 كل 14 يوم</td>
+            <td>السعر / شهر</td>
+            <td>29.99 OMR<br/><span style="font-size:0.78rem;opacity:0.5;">أو 14.99 × 2 أقساط</span></td>
+            <td>49.99 OMR<br/><span style="font-size:0.78rem;opacity:0.5;">أو 24.99 × 2 أقساط</span></td>
+            <td>74.99 OMR<br/><span style="font-size:0.78rem;opacity:0.5;">أو 37.99 × 2 أقساط</span></td>
           </tr>
         </tfoot>
       </table>
@@ -1628,7 +1727,7 @@
     <div class="cta-card reveal">
       <div class="section-label" style="justify-content:center;display:inline-flex;">🚀 ابدأ الآن</div>
       <h2 class="section-title" style="margin-top:12px;">جاهز تبدأ؟</h2>
-      <p class="section-sub">اختار باقتك الحين — والباقة الذهبية 5 أماكن فقط</p>
+      <p class="section-sub">كل الباقات لمدة شهر كامل — ادفع مرة واحدة أو على قسطين، والباقة الذهبية 5 أماكن فقط</p>
       <div class="cta-buttons">
         <a href="https://whop.com/checkout/plan_lEJVvwNZfxIT4" class="btn-cta-outline">الخطط فقط — 29.99 OMR</a>
         <a href="https://whop.com/checkout/plan_fUKzV16LOPFGK" class="btn-primary" style="font-size:1rem;padding:15px 28px;">الفضية — 49.99 OMR</a>
@@ -1648,7 +1747,7 @@
     <a href="https://tiktok.com/@muayadfit" target="_blank">TikTok</a>
     <a href="https://youtube.com/@muayadfit" target="_blank">YouTube</a>
   </div>
-  <p class="footer-email">muayad.fit@gmail.com</p>
+  <p class="footer-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f8958d9981999cd69e918cb89f95999194d69b9795">[email&#160;protected]</a></p>
   <p class="footer-copy">© 2025 muayadfit — جميع الحقوق محفوظة</p>
 </footer>
 
@@ -1658,7 +1757,7 @@
   <span class="wa-label-text">تواصل معي</span>
 </a>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 /* ── Custom cursor ── */
 const dot  = document.getElementById('cursorDot');
 const ring = document.getElementById('cursorRing');
@@ -1775,16 +1874,18 @@ document.querySelectorAll('a[href="#pricing"]').forEach(a => {
   });
 });
 
+/* ── Payment toggle ── */
+function switchPay(btn, card, type) {
+  const wrap = btn.closest('.payment-toggle');
+  wrap.querySelectorAll('.pay-opt').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById(card + '-full').classList.remove('active');
+  document.getElementById(card + '-inst').classList.remove('active');
+  document.getElementById(card + '-' + type).classList.add('active');
+}
+
 /* ── Magnetic buttons ── */
 document.querySelectorAll('.btn-primary').forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const rect = btn.getBoundingClientRect();
-    const x = (e.clientX - rect.left - rect.width  / 2) * 0.25;
-    const y = (e.clientY - rect.top  - rect.height / 2) * 0.25;
-    btn.style.transform = `translate(${x}px,${y}px)`;
-  });
-  btn.addEventListener('mouseleave', () => { btn.style.transform = ''; });
-});
-</script>
-</body>
-</html>
+    const x = (e.clientX - rect.left - rect.width  / 2) * 0.25
