@@ -1519,7 +1519,8 @@
           <li class="off"><span class="feat-icon">✗</span> تعديلات مستمرة</li>
           <li class="off"><span class="feat-icon">✗</span> مكالمة أسبوعية</li>
         </ul>
-        <a href="https://whop.com/checkout/plan_lEJVvwNZfxIT4" class="card-cta cta-blue">اشترك — الخطط فقط</a>
+        <a href="https://whop.com/checkout/plan_WABaXyex3s9SL" class="card-cta cta-blue cta-view" id="cta-full-basic">اشترك — دفعة واحدة</a>
+        <a href="https://whop.com/checkout/plan_lEJVvwNZfxIT4" class="card-cta cta-blue cta-view hidden" id="cta-install-basic">اشترك — أقساط</a>
       </div>
 
       <!-- ── SILVER ── -->
@@ -1553,7 +1554,8 @@
           <li class="off"><span class="feat-icon">✗</span> مكالمة أسبوعية</li>
           <li class="off"><span class="feat-icon">✗</span> ملفات حصرية</li>
         </ul>
-        <a href="https://whop.com/checkout/plan_fUKzV16LOPFGK" class="card-cta cta-blue">اشترك — الفضية</a>
+        <a href="https://whop.com/checkout/plan_rSdBDDnHmaS8C" class="card-cta cta-blue cta-view" id="cta-full-silver">اشترك — دفعة واحدة</a>
+        <a href="https://whop.com/checkout/plan_fUKzV16LOPFGK" class="card-cta cta-blue cta-view hidden" id="cta-install-silver">اشترك — أقساط</a>
       </div>
 
       <!-- ── GOLD ── -->
@@ -1584,7 +1586,8 @@
           <li><span class="feat-icon">✅</span> هدية نهاية البرنامج</li>
           <li><span class="feat-icon">✅</span> خطة تحافظ على النتيجة بعد الانتهاء</li>
         </ul>
-        <a href="https://whop.com/checkout/plan_cdHvLQcWIt8RF" class="card-cta cta-gold">اشترك — الذهبية</a>
+        <a href="https://whop.com/checkout/plan_JazNfipORlXpH" class="card-cta cta-gold cta-view" id="cta-full-gold">اشترك — دفعة واحدة</a>
+        <a href="https://whop.com/checkout/plan_cdHvLQcWIt8RF" class="card-cta cta-gold cta-view hidden" id="cta-install-gold">اشترك — أقساط</a>
         <p class="gold-scarcity">⚠️ بمجرد امتلاء الأماكن الـ5 — الباقة تُغلق</p>
       </div>
 
@@ -1779,11 +1782,17 @@ function switchPricing(mode) {
   document.getElementById('btnInstall').classList.toggle('active', !isFull);
 
   ['basic','silver','gold'].forEach(tier => {
-    const fullEl    = document.getElementById('full-' + tier);
-    const installEl = document.getElementById('install-' + tier);
-    if (!fullEl || !installEl) return;
-    fullEl.classList.toggle('hidden', !isFull);
-    installEl.classList.toggle('hidden', isFull);
+    // Toggle price blocks
+    const fullPrice    = document.getElementById('full-' + tier);
+    const installPrice = document.getElementById('install-' + tier);
+    if (fullPrice)    fullPrice.classList.toggle('hidden', !isFull);
+    if (installPrice) installPrice.classList.toggle('hidden', isFull);
+
+    // Toggle CTA buttons
+    const fullCta    = document.getElementById('cta-full-' + tier);
+    const installCta = document.getElementById('cta-install-' + tier);
+    if (fullCta)    fullCta.classList.toggle('hidden', !isFull);
+    if (installCta) installCta.classList.toggle('hidden', isFull);
   });
 }
 
