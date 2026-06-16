@@ -1032,89 +1032,34 @@
       text-align: center;
     }
 
-    /* ── Testimonials marquee (two opposite-scrolling rows) ── */
-    .tm-marquee {
+    /* ── Testimonials grid (static, clean) ── */
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
       margin-top: 48px;
-      display: flex;
-      flex-direction: column;
-      gap: 18px;
-      /* fade the left/right edges */
-      -webkit-mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
-      mask-image: linear-gradient(to right, transparent, #000 7%, #000 93%, transparent);
+      text-align: right;
     }
-    .tm-row { overflow: hidden; padding: 10px 0; }
-    .tm-track {
-      display: flex;
-      gap: 18px;
-      width: max-content;
-      will-change: transform;
+    @media (max-width: 900px) {
+      .testimonial-grid { grid-template-columns: repeat(2, 1fr); }
     }
-    .tm-row.ltr .tm-track { animation: tm-scroll-a 22s linear infinite; }
-    .tm-row.rtl .tm-track { animation: tm-scroll-b 26s linear infinite; }
-    /* pause the whole strip while the visitor reads */
-    .tm-marquee:hover .tm-track { animation-play-state: paused; }
-    @keyframes tm-scroll-a {
-      from { transform: translateX(0); }
-      to   { transform: translateX(-50%); }
-    }
-    @keyframes tm-scroll-b {
-      from { transform: translateX(-50%); }
-      to   { transform: translateX(0); }
+    @media (max-width: 560px) {
+      .testimonial-grid { grid-template-columns: 1fr; gap: 14px; margin-top: 32px; }
     }
 
-    /* WA Card — now a fixed-width tilt card */
+    /* WA Card */
     .wa-card {
-      flex: 0 0 330px;
-      width: 330px;
       background: var(--dark3);
       border: 1px solid rgba(255,255,255,0.07);
       border-radius: 20px;
       padding: 22px 20px 18px;
       text-align: right;
-      position: relative;
-      overflow: hidden;
-      transform: perspective(750px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
-      transition: border-color 0.25s, box-shadow 0.3s, transform 0.18s ease-out;
-    }
-    /* glow that follows the cursor */
-    .wa-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      background: radial-gradient(280px circle at var(--gx,50%) var(--gy,50%), rgba(26,157,241,0.20), transparent 62%);
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-      z-index: 0;
+      transition: border-color 0.25s, box-shadow 0.25s, transform 0.25s;
     }
     .wa-card:hover {
-      border-color: rgba(26,157,241,0.35);
-      box-shadow: 0 28px 70px rgba(0,0,0,0.55), 0 0 0 1px rgba(26,157,241,0.15);
-    }
-    .wa-card:hover::before { opacity: 1; }
-    .wa-card > * { position: relative; z-index: 1; }
-
-    /* ── Mobile: faster scroll, smaller cards, tighter layout ── */
-    @media (max-width: 768px) {
-      .tm-row.ltr .tm-track { animation-duration: 15s; }
-      .tm-row.rtl .tm-track { animation-duration: 18s; }
-    }
-    @media (max-width: 560px) {
-      .tm-marquee { gap: 12px; margin-top: 32px; }
-      .tm-row { padding: 6px 0; }
-      .tm-track { gap: 12px; }
-      .wa-card {
-        flex: 0 0 78vw;
-        width: 78vw;
-        max-width: 300px;
-        padding: 18px 16px 14px;
-        /* no tilt perspective needed on phones */
-        transform: none;
-      }
-      .tm-row.ltr .tm-track { animation-duration: 13s; }
-      .tm-row.rtl .tm-track { animation-duration: 16s; }
-      .wa-bubble p { font-size: 0.86rem; }
+      transform: translateY(-4px);
+      border-color: rgba(26,157,241,0.25);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
     }
     .wa-header {
       display: flex;
@@ -1978,61 +1923,47 @@
     <h2 class="section-title reveal reveal-delay-1">وش قالوا عني</h2>
     <p class="section-sub reveal reveal-delay-2" style="color:rgba(240,246,255,0.45);">رسائل حقيقية من متدربين حققوا نتائج</p>
 
-    <div class="tm-marquee">
+    <div class="testimonial-grid">
 
-      <!-- Row 1 — scrolls one way -->
-      <div class="tm-row ltr">
-        <div class="tm-track" data-tm-clone>
-
-          <!-- Card 1 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>هلا مويد بغيت اشكرك على النظام الجميل 🔥<br/>صراحة م توقعت بخسر ٨ كيلو ونص خلال رمضان. اشكرك من كل قلبي 🔥🔥</p><div class="wa-time">4:00 PM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">خسرت ٨.٥ كيلو خلال رمضان</div></div>
-          </div>
-
-          <!-- Card 2 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>من يوم بدايتي في الجم و وقفتك معي ما انساها</p><div class="wa-time">2:29 AM ✓✓</div></div>
-            <div class="wa-bubble"><p>كنت ٥٠ كج لما بادي معك و الحين ٧٢ 💪</p><div class="wa-time">2:29 AM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">من ٥٠ إلى ٧٢ كج — +٢٢ كيلو عضل</div></div>
-          </div>
-
-          <!-- Card 3 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>كل عام وانت بخير كوتش مؤيد<br/>مشكور ع البرنامج الممتع والمفيد الحمدلله كان برنامج مريح صحيح 🤍</p><div class="wa-time">12:58 PM ✓✓</div></div>
-            <div class="wa-bubble"><p>والدليل وزني ف رمضان ينقص الحمدلله<br/>مشكور وايد وجزاك الله خير الجزاء 🤍🤍</p><div class="wa-time">12:58 PM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">نقصان وزن في رمضان</div></div>
-          </div>
-
-        </div>
+      <!-- Card 1 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>هلا مويد بغيت اشكرك على النظام الجميل 🔥<br/>صراحة م توقعت بخسر ٨ كيلو ونص خلال رمضان. اشكرك من كل قلبي 🔥🔥</p><div class="wa-time">4:00 PM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">خسرت ٨.٥ كيلو خلال رمضان</div></div>
       </div>
 
-      <!-- Row 2 — scrolls the opposite way -->
-      <div class="tm-row rtl">
-        <div class="tm-track" data-tm-clone>
+      <!-- Card 2 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>من يوم بدايتي في الجم و وقفتك معي ما انساها</p><div class="wa-time">2:29 AM ✓✓</div></div>
+        <div class="wa-bubble"><p>كنت ٥٠ كج لما بادي معك و الحين ٧٢ 💪</p><div class="wa-time">2:29 AM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">من ٥٠ إلى ٧٢ كج — +٢٢ كيلو عضل</div></div>
+      </div>
 
-          <!-- Card 4 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>هاي كوتش 😎<br/>اليوم ودعت السبعون</p><div class="wa-time">11:46 AM ✓✓</div></div>
-            <div class="wa-bubble"><p>Officially 69.00 🎉</p><div class="wa-time">11:46 AM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">كسر حاجز الـ٧٠ كيلو</div></div>
-          </div>
+      <!-- Card 3 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>كل عام وانت بخير كوتش مؤيد<br/>مشكور ع البرنامج الممتع والمفيد الحمدلله كان برنامج مريح صحيح 🤍</p><div class="wa-time">12:58 PM ✓✓</div></div>
+        <div class="wa-bubble"><p>والدليل وزني ف رمضان ينقص الحمدلله<br/>مشكور وايد وجزاك الله خير الجزاء 🤍🤍</p><div class="wa-time">12:58 PM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">نقصان وزن في رمضان</div></div>
+      </div>
 
-          <!-- Card 5 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>احيانا التغيير في كلمة من مؤثر</p><div class="wa-time">12:47 PM ✓✓</div></div>
-            <div class="wa-bubble"><p>ماتوقعت ف يوم يتقبل لدرجة صار ياخذ شنطة الجيم وهو رايح الدوام</p><div class="wa-time">12:47 PM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">تغيّر نمط حياته كامل</div></div>
-          </div>
+      <!-- Card 4 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>هاي كوتش 😎<br/>اليوم ودعت السبعون</p><div class="wa-time">11:46 AM ✓✓</div></div>
+        <div class="wa-bubble"><p>Officially 69.00 🎉</p><div class="wa-time">11:46 AM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">كسر حاجز الـ٧٠ كيلو</div></div>
+      </div>
 
-          <!-- Card 6 -->
-          <div class="wa-card">
-            <div class="wa-bubble"><p>🔥🔥🔥🔥 ما قصرت الوحش</p><div class="wa-time">9:18 PM ✓✓</div></div>
-            <div class="wa-bubble"><p>ان شا الله بكون على العيد خسرت ٥ كيلوا 🤝🔥</p><div class="wa-time">9:18 PM ✓✓</div></div>
-            <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">في طريقه لـ ٥ كيلو قبل العيد</div></div>
-          </div>
+      <!-- Card 5 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>احيانا التغيير في كلمة من مؤثر</p><div class="wa-time">12:47 PM ✓✓</div></div>
+        <div class="wa-bubble"><p>ماتوقعت ف يوم يتقبل لدرجة صار ياخذ شنطة الجيم وهو رايح الدوام</p><div class="wa-time">12:47 PM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">تغيّر نمط حياته كامل</div></div>
+      </div>
 
-        </div>
+      <!-- Card 6 -->
+      <div class="wa-card">
+        <div class="wa-bubble"><p>🔥🔥🔥🔥 ما قصرت الوحش</p><div class="wa-time">9:18 PM ✓✓</div></div>
+        <div class="wa-bubble"><p>ان شا الله بكون على العيد خسرت ٥ كيلوا 🤝🔥</p><div class="wa-time">9:18 PM ✓✓</div></div>
+        <div class="wa-footer"><div class="wa-stars">⭐⭐⭐⭐⭐</div><div class="wa-label">في طريقه لـ ٥ كيلو قبل العيد</div></div>
       </div>
 
     </div>
@@ -2142,33 +2073,6 @@ document.querySelectorAll('a, button, .spotlight-card, .pricing-card').forEach(e
   el.addEventListener('mouseleave', () => { ring.style.width = '36px'; ring.style.height = '36px'; ring.style.borderColor = 'rgba(26,157,241,0.5)'; });
 });
 
-/* ── Testimonial marquee: duplicate cards for a seamless loop ── */
-document.querySelectorAll('.tm-track[data-tm-clone]').forEach(track => {
-  track.querySelectorAll('.wa-card').forEach(card => {
-    const clone = card.cloneNode(true);
-    clone.setAttribute('aria-hidden', 'true');
-    track.appendChild(clone);
-  });
-});
-
-/* ── Testimonial 3D tilt + cursor glow ── */
-if (window.matchMedia('(hover: hover)').matches) {
-  document.querySelectorAll('#testimonials .wa-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const r = card.getBoundingClientRect();
-      const px = (e.clientX - r.left) / r.width;   // 0..1
-      const py = (e.clientY - r.top)  / r.height;  // 0..1
-      card.style.setProperty('--ry', ((px - 0.5) *  12).toFixed(2) + 'deg');
-      card.style.setProperty('--rx', ((0.5 - py) *  12).toFixed(2) + 'deg');
-      card.style.setProperty('--gx', (px * 100).toFixed(1) + '%');
-      card.style.setProperty('--gy', (py * 100).toFixed(1) + '%');
-    });
-    card.addEventListener('mouseleave', () => {
-      card.style.setProperty('--rx', '0deg');
-      card.style.setProperty('--ry', '0deg');
-    });
-  });
-}
 
 /* ── Scroll reveal ── */
 const revealObs = new IntersectionObserver(entries => {
