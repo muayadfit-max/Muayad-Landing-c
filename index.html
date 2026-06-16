@@ -1049,8 +1049,8 @@
       width: max-content;
       will-change: transform;
     }
-    .tm-row.ltr .tm-track { animation: tm-scroll-a 40s linear infinite; }
-    .tm-row.rtl .tm-track { animation: tm-scroll-b 46s linear infinite; }
+    .tm-row.ltr .tm-track { animation: tm-scroll-a 22s linear infinite; }
+    .tm-row.rtl .tm-track { animation: tm-scroll-b 26s linear infinite; }
     /* pause the whole strip while the visitor reads */
     .tm-marquee:hover .tm-track { animation-play-state: paused; }
     @keyframes tm-scroll-a {
@@ -1095,8 +1095,26 @@
     .wa-card:hover::before { opacity: 1; }
     .wa-card > * { position: relative; z-index: 1; }
 
+    /* ── Mobile: faster scroll, smaller cards, tighter layout ── */
+    @media (max-width: 768px) {
+      .tm-row.ltr .tm-track { animation-duration: 15s; }
+      .tm-row.rtl .tm-track { animation-duration: 18s; }
+    }
     @media (max-width: 560px) {
-      .wa-card { flex-basis: 80vw; width: 80vw; max-width: 330px; }
+      .tm-marquee { gap: 12px; margin-top: 32px; }
+      .tm-row { padding: 6px 0; }
+      .tm-track { gap: 12px; }
+      .wa-card {
+        flex: 0 0 78vw;
+        width: 78vw;
+        max-width: 300px;
+        padding: 18px 16px 14px;
+        /* no tilt perspective needed on phones */
+        transform: none;
+      }
+      .tm-row.ltr .tm-track { animation-duration: 13s; }
+      .tm-row.rtl .tm-track { animation-duration: 16s; }
+      .wa-bubble p { font-size: 0.86rem; }
     }
     .wa-header {
       display: flex;
