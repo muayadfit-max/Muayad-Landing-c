@@ -192,6 +192,15 @@
       align-items: center;
     }
     #mobile-bar span { font-size: 0.95rem; font-weight: 900; color: var(--blue); }
+    #mobile-bar .mb-brand { display: flex; align-items: center; gap: 10px; }
+    #mobile-bar .mb-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      flex-shrink: 0;
+      /* Instagram/TikTok-style ring: image → dark gap → blue ring */
+      box-shadow: 0 0 0 2px var(--dark), 0 0 0 3.5px var(--blue);
+    }
     #mobile-bar a {
       background: var(--blue);
       color: #fff;
@@ -1351,9 +1360,6 @@
       tbody td:first-child { padding-right: 16px; }
 
       /* Testimonials */
-      .wa-card { width: 290px; }
-
-      /* For who */
       .for-who-grid { grid-template-columns: 1fr; gap: 16px; }
       .for-who-card { padding: 24px 20px; }
 
@@ -1406,9 +1412,7 @@
       thead th { padding: 12px 10px; font-size: 0.78rem; }
       tbody td, tfoot td { padding: 10px 10px; font-size: 0.78rem; }
 
-      /* Testimonial cards */
-      .wa-card { width: 270px; padding: 18px 16px 14px; }
-      .wa-bubble p { font-size: 0.84rem; }
+      /* Testimonial cards handled in the grid media queries above */
 
       /* For who */
       .for-who-card h3 { font-size: 1rem; }
@@ -1572,7 +1576,10 @@
 
 <!-- Mobile bar -->
 <div id="mobile-bar">
-  <span>muayadfit ⚡</span>
+  <span class="mb-brand">
+    <img class="mb-avatar" src="profile.jpg" alt="مؤيد العبري" onerror="this.style.display='none'" />
+    muayadfit
+  </span>
   <a href="#pricing">اشترك الحين</a>
 </div>
 
