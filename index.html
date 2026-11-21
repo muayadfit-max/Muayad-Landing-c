@@ -1831,15 +1831,20 @@
     .offer-eyebrow {
       display: inline-flex;
       align-items: center;
-      gap: 8px;
+      gap: 14px;
       font-weight: 800;
       font-size: 0.95rem;
-      padding: 8px 18px;
-      border-radius: 999px;
-      background: rgba(255,255,255,0.16);
-      border: 1px solid rgba(255,255,255,0.35);
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
+    .offer-eyebrow::before,
+    .offer-eyebrow::after {               /* thin rule on each side */
+      content: '';
+      width: 42px;
+      height: 1.5px;
+      background: currentColor;
+      opacity: 0.7;
+    }
+    [dir="ltr"] .offer-eyebrow { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.88rem; }
     .offer-title { font-size: clamp(2rem, 5.5vw, 3.4rem); font-weight: 900; line-height: 1.25; margin-bottom: 10px; }
     .offer-pct {
       display: inline-block;
@@ -2004,23 +2009,36 @@
     }
 
     /* ══════════════════════════════════════
-       HERO — athletic "race-day" details: slanted tag, editorial stat line,
-       slanted CTA with a solid offset block. Shapes use clip-path, not transform,
-       because the badge entrance animation and the magnetic-button script own transform.
+       HERO — editorial details: lined eyebrow, stat line with slanted
+       dividers, squared CTA (button shape lives in BUTTONS below)
     ══════════════════════════════════════ */
     #hero .hero-badge {
-      gap: 8px;
-      padding: 9px 28px;
+      gap: 14px;
+      padding: 0;
       border: none;
       border-radius: 0;
-      background: #fff;
-      color: #0f1720;
-      font-weight: 800;
-      clip-path: polygon(12px 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      background: none;
+      color: var(--blue);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: 0.3px;
     }
-    #hero .hero-badge::before,
-    #hero .hero-badge .badge-dot { display: none; }
-    #hero .hero-badge b { color: #0a7cc5; font-weight: 900; letter-spacing: 1px; }
+    #hero .hero-badge::before { display: none; }          /* no shimmer */
+    #hero .hero-badge .badge-dot,
+    #hero .hero-badge::after {                            /* thin rule on each side */
+      content: '';
+      display: block;
+      flex-shrink: 0;
+      width: 42px;
+      height: 1.5px;
+      border-radius: 0;
+      background: currentColor;
+      box-shadow: none;
+      animation: none;
+      opacity: 0.7;
+    }
+    #hero .hero-badge b { color: #fff; font-weight: 900; letter-spacing: 1px; }
+    [dir="ltr"] #hero .hero-badge { text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.85rem; }
 
     #hero .hero-stats { gap: 0; align-items: center; }
     .hero-stat {
@@ -2048,36 +2066,17 @@
       transform: translateY(-50%) skewX(-18deg);
     }
 
-    .hero-cta-shape {
-      display: inline-flex;
-      filter: drop-shadow(-6px 6px 0 #fff);
-      transition: filter 0.25s ease;
-    }
-    .hero-cta-shape:hover { filter: drop-shadow(-2px 2px 0 #fff); }
-    [dir="ltr"] .hero-cta-shape { filter: drop-shadow(6px 6px 0 #fff); }
-    [dir="ltr"] .hero-cta-shape:hover { filter: drop-shadow(2px 2px 0 #fff); }
-    #hero .btn-primary,
-    #hero .btn-primary:hover {
-      border-radius: 0;
-      box-shadow: none;
-    }
-    #hero .btn-primary {
-      padding: 18px 48px;
-      font-weight: 800;
-      clip-path: polygon(16px 0, 100% 0, calc(100% - 16px) 100%, 0 100%);
-    }
-    [dir="rtl"] #heroCta svg { transform: scaleX(-1); }   /* arrow points the way Arabic reads */
+    #hero .btn-primary { padding: 16px 38px; font-weight: 800; }
+    [dir="rtl"] #heroCta svg { transform: scaleX(-1); }   /* chevron points the way Arabic reads */
 
-    @media (max-width: 768px) {
-      .hero-cta-shape { width: 100%; max-width: 320px; }
-      .hero-cta-shape .btn-primary { width: 100%; max-width: none; }
-    }
     @media (max-width: 480px) {
       #hero .hero-stats { flex-direction: row; gap: 0; }
       .hero-stat { padding: 0 12px; font-size: 0.9rem; gap: 5px; }
       .hero-stat .stat-big { font-size: 1.3rem; }
       .hero-stat + .hero-stat::before { height: 20px; }
-      #hero .hero-badge { font-size: 0.78rem; padding: 7px 22px; }
+      #hero .hero-badge { font-size: 0.8rem; gap: 10px; padding: 0; }
+      #hero .hero-badge .badge-dot,
+      #hero .hero-badge::after { width: 22px; }
       /* English is longer: number on its own line, the other two beneath it */
       [dir="ltr"] .hero-stat:first-child { flex-basis: 100%; justify-content: center; margin-bottom: 8px; }
       [dir="ltr"] .hero-stat:nth-child(2)::before { display: none; }
@@ -2085,6 +2084,23 @@
     @media (max-width: 374px) {
       .hero-stat { padding: 0 9px; font-size: 0.82rem; }
       .hero-stat .stat-big { font-size: 1.15rem; }
+    }
+
+    /* ══════════════════════════════════════
+       BUTTONS — squared rectangles, flat (no glow)
+    ══════════════════════════════════════ */
+    .btn-primary, .card-cta, .btn-cta-outline, .btn-cta-gold, .calc-btn, .calc-cta-btn,
+    #mobile-bar a:not(.lang-switch), .offer-cta, .offer-copy, .toggle-btn { border-radius: 4px; }
+    .pricing-toggle-wrap, .offer-code, .offer-strip, #offer-float, .offer-price,
+    .card-tier-badge, .toggle-save-badge { border-radius: 6px; }
+    .btn-primary, .btn-primary:hover, .cta-blue, .cta-blue:hover, .cta-gold, .cta-gold:hover,
+    .btn-cta-gold, .btn-cta-gold:hover, .calc-btn, .calc-btn:hover, .calc-cta-btn,
+    .toggle-btn.active, .seg-btn.active { box-shadow: none; }
+    .btn-primary:hover, .cta-blue:hover, .calc-btn:hover, .calc-cta-btn:hover { filter: brightness(1.1); }
+    [dir="ltr"] .btn-primary, [dir="ltr"] .card-cta, [dir="ltr"] .btn-cta-outline,
+    [dir="ltr"] .btn-cta-gold, [dir="ltr"] .calc-btn, [dir="ltr"] .offer-cta {
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     /* ── LIGHT THEME: faint text tuned for black backgrounds is too pale on white ── */
@@ -2253,12 +2269,10 @@
     </div>
 
     <div class="hero-cta-wrap">
-      <span class="hero-cta-shape">
-        <a href="#pricing" class="btn-primary" id="heroCta">
-          اشترك الحين
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-        </a>
-      </span>
+      <a href="#pricing" class="btn-primary" id="heroCta">
+        اشترك الحين
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>
+      </a>
       <span class="hero-hint">👇 اختار الباقة اللي تناسبك</span>
     </div>
   </div>
